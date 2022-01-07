@@ -1,0 +1,17 @@
+fr:
+  cda_risk_management:
+    settings:
+      mapping_risk_custom_fields: Mapping champs personalisés risques
+    custom_fields:
+      urgence: Urgence
+      valeur_impact_risque: Valeur de l'impact du risque
+      echeance: Echéance
+      gain_attendu: Gain Attendu
+      partage_client: Partage Client
+      partage_cotraitant: Partage Cotraitant
+      plan_action: Plan d'action
+      cause: Cause
+      consequence: Conséquence
+      phase: Phase
+      probabilite_apres_pac: Probabilité après PAC
+      criticite_apres_pac: Criticité après PAC

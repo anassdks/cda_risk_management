@@ -1,0 +1,72 @@
+<div id="risk-detail" class="multieditable-container" data-entity-type="Risk" data-entity-id="" data-url="<%= url_to_entity(@easy_risk, :format => 'json') %>">
+  <div class="easy-entity-details risk details">
+    <div id="risk_detail_header" class="easy-dropper-target easy-drop-risk easy-entity-details-header" data-drop-action="risk" data-risk-id="<%= @easy_risk.id %>" data-risk-show="1">
+      <div class="contextual">
+        <%= call_hook(:view_risks_show_top_contextual_before_progress, :issue => @easy_risk) %>
+      </div>
+
+      <h2 class="risk-detail-header"><%= @easy_risk.name %></h2>
+
+      <div class="easy-entity-details-header-attributes<%= ' open' unless more_attributes_collapsed %>">
+        <div id="risk-detail-attributes" class="easy-entity-details-attributes">
+          <div class="attributes">
+            <%= issue_fields_rows do |rows|
+              rows.left l(:field_name), @easy_risk.name
+              rows.left l(:field_status), @easy_risk.status
+              rows.left l(:field_easy_risk_response), @easy_risk.response
+              rows.left l(:field_easy_risk_category), @easy_risk.category
+              rows.left l(:field_easy_risk_probability), "#{@easy_risk.probability}(#{@easy_risk.probability_value})"
+              rows.left l(:field_easy_risk_impact), "#{@easy_risk.impact}(#{@easy_risk.impact_value})"
+              rows.left l(:field_easy_risk_severity), "#{@easy_risk.severity}(#{@easy_risk.severity_value})"
+
+              rows.right l(:field_project), link_to_project(@easy_risk.project)
+              rows.right l(:field_author), link_to_user(@easy_risk.author)
+              rows.right l(:field_assigned_to), link_to_user(@easy_risk.assigned_to)
+              rows.right l(:field_created_at), format_time(@easy_risk.created_at)
+              rows.right l(:field_updated_at), format_time(@easy_risk.created_at)
+              if @easy_risk.is_closed
+                rows.right l(:field_easy_risk_closed_at), format_time(@easy_risk.closed_at)
+                rows.right l(:field_easy_risk_closed_by), link_to_user(@easy_risk.closed_by)
+              end
+            end %>
+          </div>
+          <% custom_field_values = @easy_risk.visible_custom_field_values %>
+          <% if custom_field_values.any? %>
+            <hr />
+            <div id="easy_risk_detail_custom_fields" class="custom-fields">
+              <%= render_half_width_custom_fields_rows(@easy_risk) %>
+            </div>
+          <% end %>
+        </div>
+        <%= render_more_attributes_button('hide_more_attributes_risk', User.current.id, more_attributes_collapsed) %>
+      </div>
+      <% if @easy_risk.description.present? %>
+        <div  class="wiki easy-entity-details-description kicker" id="show_risk_description">
+          <%= textilizable(@easy_risk.description) %>
+        </div>
+      <% end %>
+      <% if @easy_risk.solution.present? %>
+
+        
+
+        <fieldset class="wiki easy-entity-details-description kicker" id="show_risk_cause">
+          <% cause = @easy_risk.visible_custom_field_values.select{|i| i.custom_field.name == 'Cause'} %>
+          <legend> Cause </legend>
+          <%= textilizable(cause.first.value) %>
+        </fieldset>
+
+        <fieldset class="wiki easy-entity-details-description kicker" id="show_risk_consequence">
+          <% consequence = @easy_risk.visible_custom_field_values.select{|i| i.custom_field.name == 'Conséquence'} %>
+          <legend> Conséquence </legend>
+          <%= textilizable(consequence.first.value) %>
+        </fieldset>
+
+        <fieldset class="wiki easy-entity-details-description kicker" id="show_risk_solution">
+          <legend><%= l(:field_easy_risk_solution) %></legend>
+          <%= textilizable(@easy_risk.solution) %>
+        </fieldset>
+      <% end %>
+
+    </div>
+  </div>
+</div>

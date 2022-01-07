@@ -1,0 +1,161 @@
+<div class="tabular">
+    <% if local_assigns.fetch(:show_notes_field, nil) %>
+      <fieldset>
+        <legend><%= l :label_comment %></legend>
+
+        <% label_tag "#{f.object_name}_notes", l(:description_notes) %>
+        <%= f.text_area :notes, cols: 60, rows: 10, class: 'wiki-edit', no_label: true %>
+        <%= wikitoolbar_for('easy_risk_notes', preview_text_path, attachment_reminder: true) %>
+
+      </fieldset>
+    <% end %>
+
+    <%= toggling_fieldset l(:fields_easy_risk_identification), id: 'easy-risk__fields--identification' do %>
+      <div class="splitcontent">
+        <div class="splitcontentleft">
+
+          <p>
+            <%= f.text_field :name, required: true %>
+          </p>
+
+          <p>
+            <%= f.label :project_id, "#{l(:field_project)} *", class: 'required' %>
+            <%= easy_autocomplete_tag('easy_risk[project_id]',
+                                      {name: easy_risk.project&.name, id: easy_risk.project&.id}, easy_autocomplete_path('easy_risk_projects'),
+                                      {root_element: 'projects', html_options: {id: 'easy_risk_project_id'}})
+            %>
+          </p>
+
+        </div>
+        <div class="splitcontentleft">
+          <p>
+            <%= f.label :assigned_to_id %>
+            <%= easy_autocomplete_tag 'easy_risk[assigned_to_id]',
+                                      { name: easy_risk.assigned_to&.name, id: easy_risk.assigned_to&.id },
+                                      easy_autocomplete_path('users', project_id: easy_risk.project_id, required: false),
+                                      preload: false,
+                                      required: false,
+                                      root_element: 'users',
+                                      html_options: { id: 'assigned_to_id' },
+                                      force_autocomplete: true,
+                                      easy_autocomplete_options: {
+                                        no_button: true,
+                                        auto_focus: false,
+                                        widget: 'catcomplete',
+                                        activate_on_input_click: true,
+                                        delay: 50,
+                                        minLength: 0
+                                      } %>
+          </p>
+
+          <p>
+            <%= f.select :status_id, EasyRiskStatus.active.sorted.map { |p| [p.name, p.id] } %>
+          </p>
+        </div>
+      </div>
+
+      <p class="wiki">
+        <%= label_tag "#{f.object_name}_description", l(:field_description) %>
+        <%= f.text_area :description, no_label: true, class: 'wiki-edit' %>
+      </p>
+      <%= wikitoolbar_for "#{f.object_name}_description" %>
+
+      <% if f.object.visible_custom_field_values.count > 0 %>
+        <% f.object.visible_custom_field_values.each do |value| %>
+          <%if value.custom_field.id == Setting.plugin_cda_risk_management['cause_cf_id'].to_i || value.custom_field.id == Setting.plugin_cda_risk_management['consequence_cf_id'].to_i%>
+            <p>
+              <%= custom_field_tag_with_label :easy_risk, value %>
+            </p>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= toggling_fieldset l(:fields_easy_risk_evaluation), id: 'easy-risk__fields--evaluation' do %>
+
+      <div class="splitcontent">
+        <div class="splitcontentleft">
+          <p>
+            <%= f.select :probability_id, EasyRiskProbability.active.sorted.map { |p| [p.name, p.id] },
+                         label: l(:field_easy_risk_probability),
+                         include_blank: true %>
+          <%= link_to '', "#", :onclick => '$("#prob").css("display", "block"); $("#crit").hide(); return false;', class: 'icon-help-bubble' %>
+          </p>
+          <p>
+            <%= f.select :impact_id, EasyRiskImpact.active.sorted.map { |p| [p.name, p.id] },
+                         label: l(:field_easy_risk_impact),
+                         include_blank: true %>
+            <%= link_to '', "#", :onclick => '$("#crit").css("display", "block"); $("#prob").hide(); return false;', class: 'icon-help-bubble' %>
+          </p>
+        </div>
+        <div class="splitcontentleft">
+          <p>
+            <%= f.select :category_id, EasyRiskCategory.active.sorted.map { |p| [p.name, p.id] },
+                         label: l(:field_easy_risk_category),
+                         include_blank: true %>
+          </p>
+        </div>
+      </div>
+      <%= image_tag('probabilite.png', plugin: 'cda_risk_management', id: 'prob', style: 'display: none;margin-left: auto;margin-right: auto;width: 50%;') %>
+      <%= image_tag('criticite.png', plugin: 'cda_risk_management', id: 'crit', style: 'display: none;margin-left: auto;margin-right: auto;width: 50%;') %>
+    <% end %>
+
+    <%= toggling_fieldset l(:fields_easy_risk_solution), id: 'easy-risk__fields--solution' do %>
+      <div class="splitcontent">
+        <div class="splitcontentleft">
+          <p>
+            <%= f.select :response_id, EasyRiskResponse.active.sorted.map { |p| [p.name, p.id] },
+                         label: l(:field_easy_risk_response),
+                         include_blank: true %>
+          </p>
+        </div>
+        <div class="splitcontentleft">
+          <p>
+            <%= f.label :issue_ids, l(:label_related_issues) %>
+            <%= autocomplete_field_tag 'easy_risk[issue_ids][]',
+                                       easy_autocomplete_path('issue_autocomplete', source_options: { project_id: f.object.project_id }),
+                                       f.object.issues.map { |i| { id: i.id, value: i.subject } },
+                                       id: 'easy_risk_issue_ids',
+                                       rootElement: 'entities',
+                                       preload: false %>
+          </p>
+        </div>
+      </div>
+      <p class="wiki">
+        <%= label_tag "#{f.object_name}_solution", l(:field_easy_risk_solution) %>
+        <%= f.text_area :solution, no_label: true, class: 'wiki-edit' %>
+      </p>
+      <%= wikitoolbar_for "#{f.object_name}_solution" %>
+    <% end %>
+
+    <% if f.object.visible_custom_field_values.count > 0 %>
+      <%= toggling_fieldset l(:fields_easy_risk_other), id: 'easy-risk__fields--other' do %>
+        <% f.object.visible_custom_field_values.each do |value| %>
+          <%if value.custom_field.id != Setting.plugin_cda_risk_management['cause_cf_id'].to_i && value.custom_field.id != Setting.plugin_cda_risk_management['consequence_cf_id'].to_i%>
+            <p>
+              <%= custom_field_tag_with_label :easy_risk, value %>
+            </p>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <p id="easy-risk-attachments-container">
+
+    <label><%= l(:label_attachment_plural) %></label>
+      <%= render partial: 'attachments/form', locals: { container: @issue } %>
+    </p>
+
+  </div>
+
+<%= javascript_tag do %>
+  $( document ).ready(function() {
+     $( "#prob" ).click(function() {
+    $( "#prob" ).hide();
+    });
+
+    $( "#crit" ).click(function() {
+    $( "#crit" ).hide();
+    });
+  });
+<%end%>

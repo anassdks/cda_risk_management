@@ -1,0 +1,87 @@
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'settings', :plugin => "cda_risk_management", :media => 'all' %>
+<% end %>
+
+<div class="tab">
+  <a class="tablinks" onclick="openTab(event, 'Mapping_easy_risk')" ><%= l('cda_risk_management.settings.mapping_risk_custom_fields')%></a>
+</div>
+<div class="box_tabular" style="margin-top: 1%;">
+  <div id="Mapping_easy_risk_custom_fields" class="tabcontent">
+    <div class="box tabular">
+      <div class="splitcontentleft">
+
+        <%= field_set_tag l('cda_risk_management.custom_fields.urgence') do %>
+          <%= select_tag('settings[urgence_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['urgence_cf_id']))%>
+        <% end %>
+
+        <%= field_set_tag l('cda_risk_management.custom_fields.valeur_impact_risque') do %>
+          <%= select_tag('settings[valeur_impact_risque_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['valeur_impact_risque_cf_id']))%>
+        <% end %>
+
+        <%= field_set_tag l('cda_risk_management.custom_fields.echeance') do %>
+          <%= select_tag('settings[echeance_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['echeance_cf_id']))%>
+        <% end %>
+
+        <%= field_set_tag l('cda_risk_management.custom_fields.gain_attendu') do %>
+          <%= select_tag('settings[gain_attendu_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['gain_attendu_cf_id']))%>
+        <% end %>
+
+        <%= field_set_tag l('cda_risk_management.custom_fields.partage_client') do %>
+          <%= select_tag('settings[partage_client_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['partage_client_cf_id']))%>
+        <% end %>
+
+        <%= field_set_tag l('cda_risk_management.custom_fields.partage_cotraitant') do %>
+          <%= select_tag('settings[partage_cotraitant_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['partage_cotraitant_cf_id']))%>
+        <% end %>
+
+      </div>
+      <div class="splitcontentright">
+
+        <%= field_set_tag l('cda_risk_management.custom_fields.plan_action') do %>
+          <%= select_tag('settings[plan_action_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['plan_action_cf_id']))%>
+        <% end %>
+
+        <%= field_set_tag l('cda_risk_management.custom_fields.cause') do %>
+          <%= select_tag('settings[cause_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['cause_cf_id']))%>
+        <% end %>
+
+        <%= field_set_tag l('cda_risk_management.custom_fields.consequence') do %>
+          <%= select_tag('settings[consequence_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['consequence_cf_id']))%>
+        <% end %>
+
+        <%= field_set_tag l('cda_risk_management.custom_fields.phase') do %>
+          <%= select_tag('settings[phase_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['phase_cf_id']))%>
+        <% end %>
+
+        <%= field_set_tag l('cda_risk_management.custom_fields.probabilite_apres_pac') do %>
+          <%= select_tag('settings[probabilite_apres_pac_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['probabilite_apres_pac_cf_id']))%>
+        <% end %>
+
+        <%= field_set_tag l('cda_risk_management.custom_fields.criticite_apres_pac') do %>
+          <%= select_tag('settings[criticite_apres_pac_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['criticite_apres_pac_cf_id']))%>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<%= javascript_tag do %>
+  $('.select_type').chosen({width: "100%"});
+  
+  function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+<% end %>

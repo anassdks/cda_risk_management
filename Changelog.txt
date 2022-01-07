@@ -1,0 +1,11 @@
+[0.0.1] - 03-01-2022
+Added :
+  - Creation du plugin
+Changed :
+Fixed :
+[0.1.0] - 07-01-2022
+Added :
+  - Changed placement for custom fields in risk creation and overview
+  - added buttons to show info about probabilty and impact
+Changed :
+Fixed :
