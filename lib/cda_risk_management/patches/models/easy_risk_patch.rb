@@ -45,11 +45,6 @@ module CdaRiskManagement
 
       private
 
-      def update_custom_value(custom_field_id, value, customized_id)
-        custom_value = CustomValue.find_or_create_by(custom_field_id: custom_field_id, customized_type: "Issue", customized_id: customized_id)
-        custom_value.update(value: value)
-      end
-    
       def get_custom_value(custom_field_id)
         cv = self.custom_field_values.detect { |i| i.custom_field_id == custom_field_id }.try(:value)
         if cv.nil?
@@ -58,11 +53,6 @@ module CdaRiskManagement
           cv
         end
       end
-
-      def get_cv_id(customized_id, custom_field_id)
-        CustomValue.find_or_create_by(customized_id: customized_id, custom_field_id: custom_field_id).id
-      end
-
     end
   end
 end

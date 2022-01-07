@@ -50,13 +50,13 @@
         
 
         <fieldset class="wiki easy-entity-details-description kicker" id="show_risk_cause">
-          <% cause = @easy_risk.visible_custom_field_values.select{|i| i.custom_field.name == 'Cause'} %>
+          <% cause = @easy_risk.visible_custom_field_values.select{|i| i.custom_field.id == Setting.plugin_cda_risk_management['cause_cf_id'].to_i} %>
           <legend> Cause </legend>
           <%= textilizable(cause.first.value) %>
         </fieldset>
 
         <fieldset class="wiki easy-entity-details-description kicker" id="show_risk_consequence">
-          <% consequence = @easy_risk.visible_custom_field_values.select{|i| i.custom_field.name == 'Conséquence'} %>
+          <% consequence = @easy_risk.visible_custom_field_values.select{|i| i.custom_field.id == Setting.plugin_cda_risk_management['consequence_cf_id'].to_i} %>
           <legend> Conséquence </legend>
           <%= textilizable(consequence.first.value) %>
         </fieldset>
