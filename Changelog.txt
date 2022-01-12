@@ -9,3 +9,9 @@ Added :
   - added buttons to show info about probabilty and impact
 Changed :
 Fixed :
+[0.1.1] - 12-01-2022
+Added :
+  - Added gravity and action plan counts to risk matrix
+Changed :
+  - Changed position of custom fields plan action && impact après pac && probabilité après pac 
+Fixed :

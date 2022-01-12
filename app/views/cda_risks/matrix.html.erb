@@ -1,0 +1,89 @@
+
+<table class="risk-matrix">
+  <thead>
+    <th class="risk-matrix__cell-head--axis risk-matrix__cell-head"></th>
+    <th class="risk-matrix__cell-head--axis risk-matrix__cell-head"></th>
+    <% xaxis.each do %>
+      <th class="risk-matrix__cell-head"></th>
+    <% end %>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="<%= yaxis.size + 2 %>" class="risk-matrix__axis"><span class="risk-matrix__axis-label risk-matrix__axis-label--y"><%= yaxis_label %></span></th>
+    </tr>
+    <% yaxis.each do |row| %>
+      <tr>
+        <th class="risk-matrix__axis risk-matrix__axis--y tooltip-parent">
+          <%= row.enumeration.name %>
+          <div class="tooltip"><div><%= yaxis_label + " - " + row.value.to_s %></div><%= row.enumeration.try(:description) %></div>
+        </th>
+        <% xaxis.each do |col| %>
+        <%
+          items = groups[[row.value,col.value ]] || []
+          severity = row.value * col.value
+        %>
+
+        <% klass = '' %>
+        <% ranges.each do |range| %>
+        <% klass = range.color.to_s if (range.from..range.to).cover?(severity) %>
+        <% end %>
+        <%
+          cell_query = query.dup
+          cell_query.add_short_filter('impact_id', "=#{(flip_axes ? col : row).send(:enumeration).id}")
+          cell_query.add_short_filter('probability_id', "=#{(flip_axes ? row : col).send(:enumeration).id}")
+          cell_query_options = { set_default_columns: '1', project_id: @project, original_url: original_url }
+          cell_query_url = modal_for_trend_easy_queries_path(cell_query.to_params.merge(cell_query_options)).html_safe
+        %>
+        <td class="risk-matrix__cell tooltip-parent <%= klass %>" data-query-url="<%=j cell_query_url %>">
+          <div>
+            <span class="risk-matrix__cell-count <%= items.any? ? 'risk-matrix__cell-count--some':'' %>"><%= items.size %></span>
+          </div>
+          <div>
+        <% with_action = 0 %>
+        <% without_action = 0 %>
+          <% items.each do |item| %>
+          <% res = item.custom_field_values.detect { |i| i.custom_field_id == Setting.plugin_cda_risk_management['plan_action_cf_id'].to_i }.try(:value) %>
+          <% with_action += 1 if res == '1' %>
+          <% without_action += 1 if res == '0' %>
+          <% without_action += 1 if  res.nil? %>
+          <% end %>
+            <span class="risk-matrix__cell-with-action <%= items.any? ? 'risk-matrix__cell-count--some':'' %>"><%= severity %></span> |
+            <span class="risk-matrix__cell-with-action <%= items.any? ? 'risk-matrix__cell-count--some':'' %>"><%= with_action %></span> |
+            <span class="risk-matrix__cell-without-action <%= items.any? ? 'risk-matrix__cell-count--some':'' %>"><%= without_action %></span>
+          </div>
+          <% if items.any? %>
+            <div class="tooltip risk-matrix__cell-tooltip" onclick='event.stopPropagation();'>
+              <table>
+                <thead>
+                  <th><%= l(:field_id).downcase %></th>
+                  <th><%= l(:field_subject).downcase %></th>
+                  <th><%= l(:field_easy_risk_severity).downcase %></th>
+                </thead>
+                <%= render partial: 'easy_risks/items', collection: items, as: :item %>
+              </table>
+            </div>
+          <% end %>
+        </td>
+      <% end %>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="2" rowspan="2"></th>
+      <% xaxis.each do |col| %>
+        <th class="risk-matrix__axis risk-matrix__axis--y tooltip-parent">
+          <%= col.enumeration.name %>
+          <div class="tooltip"><div><%= xaxis_label + " - " + col.value.to_s %></div><%= col.enumeration.try(:description) %></div>
+        </th>
+      <% end %>
+    </tr>
+    <tr>
+      <th colspan="<%= xaxis.size %>" class="risk-matrix__axis risk-matrix__axis--y">
+        <span class="risk-matrix__axis-label risk-matrix__axis-label--x"><%= xaxis_label %></span>
+      </th>
+    </tr>
+  </tfoot>
+</table>
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'easy_risk_management/easy_risk_management' %>
+<% end %>

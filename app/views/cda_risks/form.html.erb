@@ -61,8 +61,11 @@
       <%= wikitoolbar_for "#{f.object_name}_description" %>
 
       <% if f.object.visible_custom_field_values.count > 0 %>
+        <% cfs = []%>
+        <% cfs << Setting.plugin_cda_risk_management['cause_cf_id'].to_i %>
+        <% cfs << Setting.plugin_cda_risk_management['consequence_cf_id'].to_i%>
         <% f.object.visible_custom_field_values.each do |value| %>
-          <%if value.custom_field.id == Setting.plugin_cda_risk_management['cause_cf_id'].to_i || value.custom_field.id == Setting.plugin_cda_risk_management['consequence_cf_id'].to_i%>
+          <%if value.custom_field.id.in? cfs%>
             <p>
               <%= custom_field_tag_with_label :easy_risk, value %>
             </p>
@@ -126,12 +129,27 @@
         <%= f.text_area :solution, no_label: true, class: 'wiki-edit' %>
       </p>
       <%= wikitoolbar_for "#{f.object_name}_solution" %>
+      <% if f.object.visible_custom_field_values.count > 0 %>
+        <% f.object.visible_custom_field_values.each do |value| %>
+          <%if value.custom_field.id == Setting.plugin_cda_risk_management['plan_action_cf_id'].to_i || value.custom_field.id == Setting.plugin_cda_risk_management['probabilite_apres_pac_cf_id'].to_i || value.custom_field.id == Setting.plugin_cda_risk_management['criticite_apres_pac_cf_id'].to_i%>
+            <p style="margin-left: 4%;">
+              <%= custom_field_tag_with_label :easy_risk, value %>
+            </p>
+          <% end %>
+        <% end %>
+      <% end %>
     <% end %>
 
     <% if f.object.visible_custom_field_values.count > 0 %>
       <%= toggling_fieldset l(:fields_easy_risk_other), id: 'easy-risk__fields--other' do %>
         <% f.object.visible_custom_field_values.each do |value| %>
-          <%if value.custom_field.id != Setting.plugin_cda_risk_management['cause_cf_id'].to_i && value.custom_field.id != Setting.plugin_cda_risk_management['consequence_cf_id'].to_i%>
+        <% cfs = []%>
+        <% cfs << Setting.plugin_cda_risk_management['cause_cf_id'].to_i %>
+        <% cfs << Setting.plugin_cda_risk_management['consequence_cf_id'].to_i%>
+        <% cfs << Setting.plugin_cda_risk_management['plan_action_cf_id'].to_i%>
+        <% cfs << Setting.plugin_cda_risk_management['probabilite_apres_pac_cf_id'].to_i%>
+        <% cfs << Setting.plugin_cda_risk_management['criticite_apres_pac_cf_id'].to_i%>
+          <%if !value.custom_field.id.in? cfs %>
             <p>
               <%= custom_field_tag_with_label :easy_risk, value %>
             </p>
