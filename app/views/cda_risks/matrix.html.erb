@@ -21,6 +21,7 @@
         <%
           items = groups[[row.value,col.value ]] || []
           severity = row.value * col.value
+          severity = severity.to_i
         %>
 
         <% klass = '' %>

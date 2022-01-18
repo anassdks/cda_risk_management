@@ -15,3 +15,10 @@ Added :
 Changed :
   - Changed position of custom fields plan action && impact après pac && probabilité après pac 
 Fixed :
+[0.1.3] - 18-01-2022
+Added :
+  - Added translation for impact
+Changed :
+  - removed cause and consequence from issue show interface 
+  - Removed float numbers from gravity
+Fixed :
