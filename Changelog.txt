@@ -27,3 +27,9 @@ Added :
   - Added external id incrementation by project
 Changed :
 Fixed :
+[0.1.6] - 21-01-2022
+Added :
+Changed :
+  - Changed position of Phase cf & discipline cf
+  - Renamed Categorie
+Fixed :

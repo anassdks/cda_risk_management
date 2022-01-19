@@ -34,6 +34,10 @@
           <%= select_tag('settings[partage_cotraitant_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['partage_cotraitant_cf_id']))%>
         <% end %>
 
+        <%= field_set_tag l('cda_risk_management.custom_fields.discipline') do %>
+          <%= select_tag('settings[discipline_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['discipline_cf_id']))%>
+        <% end %>
+
       </div>
       <div class="splitcontentright">
 
@@ -61,8 +65,8 @@
           <%= select_tag('settings[criticite_apres_pac_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['criticite_apres_pac_cf_id']))%>
         <% end %>
 
-        <%= field_set_tag l('cda_risk_management.custom_fields.id_externe') do %>
-          <%= select_tag('settings[id_externe_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['id_externe_cf_id']))%>
+        <%= field_set_tag l('cda_risk_management.custom_fields.id_client') do %>
+          <%= select_tag('settings[id_client_cf_id]', options_for_select( CustomField.where(type: 'EasyRiskCustomField').map {|cf| [cf.name, cf.id]}.sort, Setting.plugin_cda_risk_management['id_client_cf_id']))%>
         <% end %>
 
       </div>

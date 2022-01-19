@@ -1,5 +1,6 @@
 fr:
   field_easy_risk_impact: Criticité
+  field_easy_risk_category: Type de risque
   cda_risk_management:
     settings:
       mapping_risk_custom_fields: Mapping champs personalisés risques
@@ -16,4 +17,5 @@ fr:
       phase: Phase
       probabilite_apres_pac: Probabilité après PAC
       criticite_apres_pac: Criticité après PAC
-      id_externe: Id externe
+      id_client: ID Client
+      discipline: Discipline

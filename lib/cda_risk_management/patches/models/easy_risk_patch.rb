@@ -41,21 +41,21 @@ module CdaRiskManagement
 
       def check_partage_client
         partage_client = get_custom_value(Setting.plugin_cda_risk_management['partage_client_cf_id'].to_i).to_i
-        id_externe = get_custom_value(Setting.plugin_cda_risk_management['id_externe_cf_id'].to_i)
+        id_client = get_custom_value(Setting.plugin_cda_risk_management['id_client_cf_id'].to_i)
 
         project_risks = EasyRisk.where(project_id: self.project_id).map(&:id)
-        external_string_ids = CustomValue.where(custom_field_id:Setting.plugin_cda_risk_management['id_externe_cf_id'].to_i, customized_id: project_risks).map(&:value)
+        external_string_ids = CustomValue.where(custom_field_id:Setting.plugin_cda_risk_management['id_client_cf_id'].to_i, customized_id: project_risks).map(&:value)
         external_ids = external_string_ids.map{|i| i.chars.last(4).join }
         max_id = external_ids.max.to_i
-        # max_id = CustomValue.where(custom_field_id:Setting.plugin_cda_risk_management['id_externe_cf_id'].to_i).maximum('value').to_i
+        # max_id = CustomValue.where(custom_field_id:Setting.plugin_cda_risk_management['id_client_cf_id'].to_i).maximum('value').to_i
         if partage_client == 1
-          if id_externe == ''
+          if id_client == ''
             new_id = max_id + 1
             new_value = self.project.name + '-' + format('%04d', new_id)
-            update_custom_value(Setting.plugin_cda_risk_management['id_externe_cf_id'].to_i, new_value)
+            update_custom_value(Setting.plugin_cda_risk_management['id_client_cf_id'].to_i, new_value)
           end
         elsif partage_client == 0
-          update_custom_value(Setting.plugin_cda_risk_management['id_externe_cf_id'].to_i, '')
+          update_custom_value(Setting.plugin_cda_risk_management['id_client_cf_id'].to_i, '')
         end                         
 
       end

@@ -28,6 +28,17 @@
 
         </div>
         <div class="splitcontentleft">
+          <% if f.object.visible_custom_field_values.count > 0 %>
+            <% cfs = []%>
+            <% cfs << Setting.plugin_cda_risk_management['discipline_cf_id'].to_i%>
+            <% f.object.visible_custom_field_values.each do |value| %>
+              <%if value.custom_field.id.in? cfs%>
+                <p>
+                  <%= custom_field_tag_with_label :easy_risk, value %>
+                </p>
+              <% end %>
+            <% end %>
+          <% end %>
           <p>
             <%= f.label :assigned_to_id %>
             <%= easy_autocomplete_tag 'easy_risk[assigned_to_id]',
@@ -97,6 +108,17 @@
                          label: l(:field_easy_risk_category),
                          include_blank: true %>
           </p>
+          <% if f.object.visible_custom_field_values.count > 0 %>
+            <% cfs = []%>
+            <% cfs << Setting.plugin_cda_risk_management['phase_cf_id'].to_i%>
+            <% f.object.visible_custom_field_values.each do |value| %>
+              <%if value.custom_field.id.in? cfs%>
+                <p>
+                  <%= custom_field_tag_with_label :easy_risk, value %>
+                </p>
+              <% end %>
+            <% end %>
+          <% end %>
         </div>
       </div>
       <%= image_tag('probabilite.png', plugin: 'cda_risk_management', id: 'prob', style: 'display: none;margin-left: auto;margin-right: auto;width: 50%;') %>
@@ -149,13 +171,16 @@
         <% cfs << Setting.plugin_cda_risk_management['plan_action_cf_id'].to_i%>
         <% cfs << Setting.plugin_cda_risk_management['probabilite_apres_pac_cf_id'].to_i%>
         <% cfs << Setting.plugin_cda_risk_management['criticite_apres_pac_cf_id'].to_i%>
-        <% cfs << Setting.plugin_cda_risk_management['id_externe_cf_id'].to_i%>
+        <% cfs << Setting.plugin_cda_risk_management['id_client_cf_id'].to_i%>
+        <% cfs << Setting.plugin_cda_risk_management['discipline_cf_id'].to_i%>
+        <% cfs << Setting.plugin_cda_risk_management['phase_cf_id'].to_i%>
+        
           <%if !value.custom_field.id.in? cfs %>
             <p>
               <%= custom_field_tag_with_label :easy_risk, value %>
             </p>
-          <% elsif value.custom_field.id == Setting.plugin_cda_risk_management['id_externe_cf_id'].to_i%>
-            <% val = CustomValue.find_by(custom_field_id: Setting.plugin_cda_risk_management['id_externe_cf_id'].to_i, customized_type: "EasyRisk", customized_id: f.object.id)%>
+          <% elsif value.custom_field.id == Setting.plugin_cda_risk_management['id_client_cf_id'].to_i%>
+            <% val = CustomValue.find_by(custom_field_id: Setting.plugin_cda_risk_management['id_client_cf_id'].to_i, customized_type: "EasyRisk", customized_id: f.object.id)%>
             <p>
               <label for="easy_risk_custom_field_values_33_" class="text"><span>ID client</span></label>
               <input type="text" name="easy_risk[custom_field_values][33]" id="easy_risk_custom_field_values_33_" value=<%= val %> readonly class="text">
