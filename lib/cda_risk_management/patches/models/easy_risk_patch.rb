@@ -3,17 +3,13 @@ module CdaRiskManagement
     module EasyRiskPatch
       def self.prepended(base)
         base.class_eval do
-          before_validation :check_cda_rules
+          before_validation :check_plan_action
+          after_save :check_partage_client
         end
       end
     
       # Patch pour implémentation des règles de gestion de CDA
       # avant enregistrement de la tâche
-      def check_cda_rules
-        self.check_plan_action
-      end
-
-      # ila kan plan d'action 'non' Probabilité après PAC et impact après PAC
   
       def check_plan_action
         plan_action = get_custom_value(Setting.plugin_cda_risk_management['plan_action_cf_id'].to_i).to_i
@@ -43,6 +39,25 @@ module CdaRiskManagement
         end
       end
 
+      def check_partage_client
+        partage_client = get_custom_value(Setting.plugin_cda_risk_management['partage_client_cf_id'].to_i).to_i
+        id_externe = get_custom_value(Setting.plugin_cda_risk_management['id_externe_cf_id'].to_i)
+
+        project_risks = EasyRisk.where(project_id: self.project_id).map(&:id)
+        max_id = CustomValue.where(custom_field_id:Setting.plugin_cda_risk_management['id_externe_cf_id'].to_i, customized_id: project_risks).maximum('value').to_i
+        # max_id = CustomValue.where(custom_field_id:Setting.plugin_cda_risk_management['id_externe_cf_id'].to_i).maximum('value').to_i
+        if partage_client == 1
+          if id_externe == ''
+            new_id = max_id + 1
+            new_value = self.project.name + '-' + format('%04d', new_id)
+            update_custom_value(Setting.plugin_cda_risk_management['id_externe_cf_id'].to_i, new_value)
+          end
+        elsif partage_client == 0
+          update_custom_value(Setting.plugin_cda_risk_management['id_externe_cf_id'].to_i, '')
+        end
+
+      end
+
       private
 
       def get_custom_value(custom_field_id)
@@ -52,6 +67,11 @@ module CdaRiskManagement
         else 
           cv
         end
+      end
+
+      def update_custom_value(custom_field_id, value)
+        custom_value = CustomValue.find_or_create_by(custom_field_id: custom_field_id, customized_type: "EasyRisk", customized_id: self.id)
+        custom_value.update(value: value)
       end
     end
   end

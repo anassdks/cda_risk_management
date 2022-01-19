@@ -22,3 +22,8 @@ Changed :
   - removed cause and consequence from issue show interface 
   - Removed float numbers from gravity
 Fixed :
+[0.1.4] - 20-01-2022
+Added :
+  - Added external id incrementation by project
+Changed :
+Fixed :

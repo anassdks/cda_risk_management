@@ -16,3 +16,4 @@ fr:
       phase: Phase
       probabilite_apres_pac: Probabilité après PAC
       criticite_apres_pac: Criticité après PAC
+      id_externe: Id externe
