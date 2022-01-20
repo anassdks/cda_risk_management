@@ -33,3 +33,8 @@ Changed :
   - Changed position of Phase cf & discipline cf
   - Renamed Categorie
 Fixed :
+[0.1.7] - 21-01-2022
+Added :
+Changed :
+  - Changed Matrix colors
+Fixed :

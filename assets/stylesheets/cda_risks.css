@@ -1,170 +1,4 @@
-@media print {
-
-    .gantt_task_paint_time {
-        background: #ffd90052;
-        height: 23px;
-        position: relative;
-        pointer-events: none;
-    }
-  
-}
-.gantt_task_line .gantt_task_latest_milestone {
-    background: url('../images/arrow_down.png') no-repeat;
-    background-size: cover;
-    width: 20px;
-    height: 20px;
-    position: relative;
-}
- .gantt_task_dp {
-    width: 20px;
-    height: 20px;
-    font-weight: bold;
-    position: relative;
-    top: -39px;
-}
- .gantt_task_fp {
-    width: 20px;
-    height: 20px;
-    font-weight: bold;
-    position: relative;
-    top: -59px;
-
-}
-.gantt_task_antecedent {
-    width: 20px;
-    height: 20px;
-    font-weight: bold;
-    position: relative;
-    top: -39px;
-
-}
-.gantt_task_line .gantt_task_marker {
-    background: url('../images/marker.png') no-repeat;
-    background-size: cover;
-    width: 20px;
-    height: 20px;
-    position: relative;
-    top: -39px;
-}
-.gantt_task_paint_time {
-    background: #ffd90052;
-    height: 23px;
-    position: relative;
-    pointer-events: none;
-}
-td {
-    text-align: center;
-  }
-table thead th {
-    text-align: center;
-}
-
-.tabular p > label {
-    width: 30%  !important;
-}
-
-.inherit-position {
-    position: inherit !important;
-}
-
-.gantt_task_antecedent_container {
-    position: absolute;
-    box-sizing: border-box;
-    z-index: 1100;
-    transform: translateY(-100%);
-    left: 40%;
-}
-.gantt_task_antecedent_table {
-    background-color: #603238 !important;
-    color :white;
-}
-.gantt_task_antecedent_table tbody{
-    display:block;
-    max-height:181px;
-    overflow-y:scroll;
-    border: 1px solid rgba(255,255,255,0.3);
-}
-
-.gantt_task_antecedent_table td,  th {
-    overflow-wrap: break-word;
-    text-align: center;
-    padding: 5px;
-    font-size: 13px;
-    border-bottom: 1px solid #dddddd;
-}
-.gantt_task_antecedent_table tbody th {
-    color: #ffffff;
-    background: #603238 !important;
-    font-weight: normal;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
-
-.gantt_task_consequent_container {
-    position: absolute;
-    box-sizing: border-box;
-    z-index: 1100;
-    transform: translateY(-100%);
-    left: 40%;
-}
-.gantt_task_consequent_table {
-    background-color: #603238 !important;
-    color :white;
-}
-.gantt_task_consequent_table tbody{
-    display:block;
-    max-height:181px;
-    overflow-y:scroll;
-    border: 1px solid rgba(255,255,255,0.3);
-}
-
-.gantt_task_consequent_table td,  th {
-    overflow-wrap: break-word;
-    text-align: center;
-    padding: 5px;
-    font-size: 13px;
-    border-bottom: 1px solid #dddddd;
-}
-.gantt_task_consequent_table th {
-    color: #ffffff;
-    font-weight: normal;
-    background: #32603b !important;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
-
-.close-btn {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    opacity: 0.3;
-    border: none !important;
-    background: none !important;
-    position: absolute;
-    right: 0;
-    transform: translateY(-100%);
-  }
-  .close-btn:hover {
-    opacity: 1;
-  }
-  .close-btn:before, .close-btn:after {
-    position: absolute;
-    top: 0;
-    content: ' ';
-    height: 24px;
-    width: 2px;
-    background-color: #f00;
-  }
-  .close-btn:before {
-    transform: rotate(45deg);
-  }
-  .close-btn:after {
-    transform: rotate(-45deg);
-  }
-
-  .tabcontent {
+.tabcontent {
     display: none;
   }
   .tab a.active {
@@ -193,36 +27,22 @@ table thead th {
       float:right;
   }
 
-.gantt_task_error{
-    background-color: rgba(255, 0, 0, 0.77);
-    position: absolute;
-    overflow: hidden;
-    box-sizing: border-box;
-    z-index: 1100;
-    transform: translateY(-100%);
-    left: 44%;
-    color: white;
-    font-size: x-large;
-    border: outset rgba(221, 133, 133, 0.77);
-}
-.local{
-    background: #ff002157 !important;
-}
-.sap{
-    background: #009fff87 !important;
-}
-.local_c{
-    background: #ff002157 !important;
-}
-.sap_c{
-    background: #009fff87 !important;
-}
-.warn{
-    background: #f2dede;
-    color: #a94442;
-    border: 1px solid;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    padding: 15px;
-    left: 60%;
-}
+  .risk-matrix .scheme-1{
+    background: #ff0000 !important;
+    color: white !important;
+  }
+  .risk-matrix .scheme-7{
+    background: #ffc000 !important;
+  }
+  .risk-matrix .scheme-3{
+    background: #ffff00 !important;
+  }
+  .risk-matrix .scheme-5{
+    background: #92d050 !important;
+  }
+  .risk-matrix .scheme-5{
+    background: #92d050 !important;
+  }
+  .risk-matrix__cell{
+    background: #00b0f0 !important;
+  }

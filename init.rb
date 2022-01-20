@@ -2,7 +2,7 @@ Redmine::Plugin.register :cda_risk_management do
   name 'CDA risk management plugin'
   author 'AKKA Technologies'
   description 'This is a plugin to override some funtionalities in easy_risk_management plugin'
-  version '0.1.6'
+  version '0.1.7'
 
   settings default: { phase_cf_id: nil}, :partial => 'settings/cda_risk_management_settings'
 end
