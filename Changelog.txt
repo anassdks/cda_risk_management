@@ -38,8 +38,8 @@ Added :
 Changed :
   - Changed Matrix colors
 Fixed :
-[0.1.8] - 21-01-2022
+[0.2.0] - 23-01-2022
 Added :
-  - added button for showing matrix after PAC in matrix edit form
+  - added devs for showing matrice before pac, almost working
 Changed :
 Fixed :

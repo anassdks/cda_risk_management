@@ -1,0 +1,21 @@
+<%
+  entities ||= easy_page_modules_data[:entities]
+  query ||= easy_page_modules_data[:query]
+%>
+
+<% if page_module.is_a?(EasyPageZoneModule) && query %>
+  <%= error_messages_for query -%>
+  <% if entities.blank? %>
+    <p class="nodata"><%= l(:label_no_data) %></p>
+  <% else %>
+    <%= render partial: 'cda_risks/matrix', locals: { query: query,
+                                                       entities: entities,
+                                                       flip_axes: page_module.settings[:flip_axes].to_boolean,
+                                                       before_pac: page_module.settings[:before_pac].to_boolean,
+                                                       page_module: page_module } %>
+  <% end %>
+<% elsif page_module.is_a?(EasyPageTemplateModule) %>
+  <%= l(:label_easy_page_module_empty, modulename: page_module.module_definition.translated_name).html_safe -%>
+<% else %>
+  <%= l(:label_easy_page_module_settings_missing) %>
+<% end %>

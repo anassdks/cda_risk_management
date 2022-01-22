@@ -5,6 +5,32 @@ module CdaRiskManagement
         base.class_eval do
           before_validation :check_plan_action
           after_save :check_partage_client
+
+
+          def probability_value_pac
+            BigDecimal(1)
+            # enumeration_probability_value&.value || 0.0
+          end
+        
+          def impact_value_pac
+            BigDecimal(1)
+            # enumeration_impact_value&.value || 0.0
+          end
+        
+          def severity_value_pac
+            BigDecimal(1)
+            # probability_value * impact_value
+          end
+
+          def severity_value_pac
+            probability_value_pac * impact_value_pac
+          end
+
+          def change_severity_pac
+            range = EasyRiskEnumerationRange.all.detect{|r| r.range.cover?(severity_value_pac) }
+            self.severity = range&.enumeration
+          end
+        
         end
       end
     
