@@ -1,6 +1,8 @@
 fr:
   field_easy_risk_impact: Criticité
   field_easy_risk_category: Type de risque
+  label_matrix_after_pac: Matrice après plan de réduction des risques
+
   cda_risk_management:
     settings:
       mapping_risk_custom_fields: Mapping champs personalisés risques

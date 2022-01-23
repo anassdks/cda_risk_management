@@ -43,3 +43,8 @@ Added :
   - added devs for showing matrice before pac, almost working
 Changed :
 Fixed :
+[0.2.1] - 24-01-2022
+Added :
+  - Matrice after pac working
+Changed :
+Fixed :

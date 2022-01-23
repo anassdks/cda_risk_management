@@ -34,11 +34,11 @@
                form: form } %>
 
   <% if page_params[:page].page_name == 'easy-risks'%>
-    <div id="<%= "#{modul_uniq_id}_compare_to_before_action_plan" %>">
-      <%= hidden_field_tag "#{page_module.module_name}[before_pac]", '0' %>
+    <div id="<%= "#{modul_uniq_id}_compare_to_after_action_plan" %>">
+      <%= hidden_field_tag "#{page_module.module_name}[after_pac]", '0' %>
       <label>
-        <%= "Matrice avant plan d'action" %>
-        <%= check_box_tag "#{page_module.module_name}[before_pac]", '1', page_module.settings['before_pac'].to_boolean%>
+        <%= l(:label_matrix_after_pac) %>
+        <%= check_box_tag "#{page_module.module_name}[after_pac]", '1', page_module.settings['after_pac'].to_boolean%>
       </label>
     </div>
   <% end %>

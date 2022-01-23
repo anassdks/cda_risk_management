@@ -11,7 +11,7 @@
     <%= render partial: 'cda_risks/matrix', locals: { query: query,
                                                        entities: entities,
                                                        flip_axes: page_module.settings[:flip_axes].to_boolean,
-                                                       before_pac: page_module.settings[:before_pac].to_boolean,
+                                                       after_pac: page_module.settings[:after_pac].to_boolean,
                                                        page_module: page_module } %>
   <% end %>
 <% elsif page_module.is_a?(EasyPageTemplateModule) %>

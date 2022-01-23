@@ -8,20 +8,21 @@ module CdaRiskManagement
 
 
           def probability_value_pac
-            BigDecimal(1)
-            # enumeration_probability_value&.value || 0.0
+            prob_apres_pac = CustomValue.where(custom_field_id: Setting.plugin_cda_risk_management['probabilite_apres_pac_cf_id'].to_i, customized_id: self.id).first.value
+            if !prob_apres_pac.nil? 
+              prob_apres_pac = prob_apres_pac.delete("^0-9-.").to_i
+            end
+            BigDecimal(prob_apres_pac)
           end
         
           def impact_value_pac
-            BigDecimal(1)
-            # enumeration_impact_value&.value || 0.0
+            impact_apres_pac = CustomValue.where(custom_field_id: Setting.plugin_cda_risk_management['criticite_apres_pac_cf_id'].to_i, customized_id: self.id).first.value
+            if !impact_apres_pac.nil?
+              impact_apres_pac = impact_apres_pac.delete("^0-9-.").to_i
+            end
+            BigDecimal(impact_apres_pac)
           end
         
-          def severity_value_pac
-            BigDecimal(1)
-            # probability_value * impact_value
-          end
-
           def severity_value_pac
             probability_value_pac * impact_value_pac
           end
