@@ -29,7 +29,11 @@
     xaxis = impact
     xaxis_label = l(:field_easy_risk_impact)
     yaxis_label = l(:field_easy_risk_probability)
-    groups = entities.group_by{|e| [e.probability_value,e.impact_value]}
+    if after_pac
+      groups = entities.group_by{|e| [e.probability_value_pac,e.impact_value_pac]}
+    else 
+      groups = entities.group_by{|e| [e.probability_value,e.impact_value]}
+    end
   end
   xaxis.sort_by! { |xaxis| xaxis.value }
   yaxis.sort_by! { |yaxis| - yaxis.value }
