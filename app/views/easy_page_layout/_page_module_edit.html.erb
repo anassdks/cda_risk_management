@@ -32,14 +32,4 @@
                modul_uniq_id: modul_uniq_id,
                page_params: page_params,
                form: form } %>
-
-  <% if page_params[:page].page_name == 'easy-risks'%>
-    <div id="<%= "#{modul_uniq_id}_compare_to_after_action_plan" %>">
-      <%= hidden_field_tag "#{page_module.module_name}[after_pac]", '0' %>
-      <label>
-        <%= l(:label_matrix_after_pac) %>
-        <%= check_box_tag "#{page_module.module_name}[after_pac]", '1', page_module.settings['after_pac'].to_boolean%>
-      </label>
-    </div>
-  <% end %>
 <% end %>

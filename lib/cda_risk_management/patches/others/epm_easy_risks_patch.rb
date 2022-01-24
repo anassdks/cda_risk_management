@@ -6,6 +6,9 @@ module CdaRiskManagement
           def show_path
             'cda_risks/easy_page_modules/easy_risks_show'
           end
+          def edit_path
+            'cda_risks/easy_page_modules/easy_risks_edit'
+          end
         end
       end
     end

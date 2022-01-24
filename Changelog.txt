@@ -53,3 +53,9 @@ Added :
   - added columns(PRR, Gravity after PRR) when hovering over risk cell on matrix
 Changed :
 Fixed :
+[0.2.3] - 26-01-2022
+Added :
+  - added date input 
+  - nothing working yet about showing matrix in old date
+Changed :
+Fixed :

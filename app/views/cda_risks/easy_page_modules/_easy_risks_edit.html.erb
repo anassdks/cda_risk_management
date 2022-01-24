@@ -1,0 +1,52 @@
+<%
+  query ||= @easy_page_modules_data[block_name][:query]
+  query_params ||= settings
+  query_name = if settings['query_name'].blank?
+    l("easy_page_module.#{query.entity.name.downcase}_query.adhoc_query_default_text",
+      default: l('easy_page_module.issue_query.adhoc_query_default_text'))
+    else
+      CGI::unescape(settings['query_name'])
+    end
+%>
+
+<%= label_tag "#{block_name}_heading", l(:label_heading) %>
+<%= page_module_settings_text_field_tag(page_module, %w[query_name],
+                                                      value: query_name,
+                                                      onchange: "EASY.utils.setNameToModuleHead(this)") %>
+
+<div id="<%= "#{modul_uniq_id}_compare_to_previous_period_paragraph" %>">
+  <%= hidden_field_tag "#{block_name}[flip_axes]", '0' %>
+  <label>
+    <%= l(:label_flip_axes, scope: :easy_risks) %>
+    <%= check_box_tag "#{block_name}[flip_axes]", '1', settings['flip_axes'].to_boolean %>
+  </label>
+</div>
+<div id="<%= "#{modul_uniq_id}_compare_to_after_action_plan" %>">
+  <%= hidden_field_tag "#{page_module.module_name}[after_pac]", '0' %>
+  <label>
+    <%= l(:label_matrix_after_pac) %>
+    <%= check_box_tag "#{page_module.module_name}[after_pac]", '1', page_module.settings['after_pac'].to_boolean%>
+  </label>
+</div>
+
+<div id="<%= "#{modul_uniq_id}_compare_to_given_date" %>">
+  <%= hidden_field_tag "#{page_module.module_name}[given_date]", value: Date.today %>
+  <label>
+    <%= 'Date antérieure' %>
+    <%= date_field_tag "#{page_module.module_name}[given_date]",'',:value => page_module.settings['given_date']%>
+  </label>
+</div>
+
+<div id="<%= modul_uniq_id -%>filters" class="easy-query-filters-field in-a-inner-box">
+  <h3 class="easy-query-type-settings-container-filters"><%= l(:label_filter_plural) %></h3>
+  <%= render_with_fallback partial: 'filters', prefixes: query, locals: { query: query,
+                                                                          modul_uniq_id: modul_uniq_id,
+                                                                          block_name: block_name } %>
+</div>
+
+<%= render 'easy_page_modules/global_filters', modul_uniq_id: modul_uniq_id,
+                                               block_name: block_name,
+                                               page_params: page_params,
+                                               query_params: query_params,
+                                               query: query,
+                                               page_module: page_module %>
