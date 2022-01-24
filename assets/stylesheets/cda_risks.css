@@ -46,3 +46,12 @@
   .risk-matrix__cell{
     background: #00b0f0 !important;
   }
+
+  .img-risk{
+    max-width: 30%;
+    height: auto;
+    box-sizing: border-box;
+    position: absolute;
+    margin-left: 21px;
+    margin-top: -5px;
+  }

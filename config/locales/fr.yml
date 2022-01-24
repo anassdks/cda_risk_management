@@ -2,6 +2,8 @@ fr:
   field_easy_risk_impact: Criticité
   field_easy_risk_category: Type de risque
   label_matrix_after_pac: Matrice après plan de réduction des risques
+  label_plan_reduction_risque: PRR
+  label_gravity_after_prr: après PRR
 
   cda_risk_management:
     settings:

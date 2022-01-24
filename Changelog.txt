@@ -48,3 +48,8 @@ Added :
   - Matrice after pac working
 Changed :
 Fixed :
+[0.2.2] - 25-01-2022
+Added :
+  - added columns(PRR, Gravity after PRR) when hovering over risk cell on matrix
+Changed :
+Fixed :
