@@ -42,7 +42,6 @@
         groups_count << grp.last.count
         groups_count
       end
-      groups = entities.group_by{|e| [e.probability_value,e.impact_value]}
     else 
       groups = entities.group_by{|e| [e.probability_value,e.impact_value]}
     end
