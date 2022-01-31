@@ -12,6 +12,7 @@
                                                        entities: entities,
                                                        flip_axes: page_module.settings[:flip_axes].to_boolean,
                                                        after_pac: page_module.settings[:after_pac].to_boolean,
+                                                       given_date: page_module.settings[:given_date],
                                                        page_module: page_module } %>
   <% end %>
 <% elsif page_module.is_a?(EasyPageTemplateModule) %>

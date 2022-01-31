@@ -23,35 +23,43 @@ module CdaRiskManagement
                   entities.each do |entity|
                     journals = Journal.where(journalized_id: entity.id, journalized_type: 'EasyRisk')
                     journals = journals.reject{|j| j.created_on.strftime('%Y-%m-%d').to_date > settings['given_date'].to_date }
-                    criticite = ''
+                    criticite_apres_pac = ''
+                    probabilite_apres_pac = ''
+                    severity_id = ''
+                    probability_id = ''
+                    impact_id = ''
                     journals.reverse.each do |journal|
-                      detail_crit = journal.details.detect {|d| d.property == 'cf' && d.prop_key == Setting.plugin_cda_risk_management['criticite_apres_pac_cf_id']}
-                      detail_prob = journal.details.detect {|d| d.property == 'cf' && d.prop_key == Setting.plugin_cda_risk_management['probabilite_apres_pac_cf_id']}
-                      if !detail_crit.nil? && criticite == ''
-                        criticite = detail_crit.old_value
+                      detail_crit_apres_pac = journal.details.detect {|d| d.property == 'cf' && d.prop_key == Setting.plugin_cda_risk_management['criticite_apres_pac_cf_id']}
+                      detail_prob_apres_pac = journal.details.detect {|d| d.property == 'cf' && d.prop_key == Setting.plugin_cda_risk_management['probabilite_apres_pac_cf_id']}
+                      severity = journal.details.detect {|d| d.property == 'attr' && d.prop_key == 'severity_id'}
+                      probability = journal.details.detect {|d| d.property == 'attr' && d.prop_key == 'probability_id'}
+                      impact = journal.details.detect {|d| d.property == 'attr' && d.prop_key == 'impact_id'}
+
+                      if !probability.nil? && probability_id == ''
+                        probability_id = probability.old_value.to_i
+                        entity.probability_id = probability_id
                       end
-                      if !detail_prob.nil? && criticite == ''
-                        criticite = detail_prob.old_value
+
+                      if !impact.nil? && impact_id == ''
+                        impact_id = impact.old_value.to_i
+                        entity.impact_id = impact_id
+                      end
+
+                      if !severity.nil? && severity_id == ''
+                        severity_id = severity.old_value.to_i
+                        entity.severity_id = severity_id
+                      end
+                      if !detail_crit_apres_pac.nil? && criticite_apres_pac == ''
+                        criticite_apres_pac = detail_crit_apres_pac.old_value
+                        entity.impact_apres_pac = criticite_apres_pac
+                      end
+                      
+                      if !detail_prob_apres_pac.nil? && probabilite_apres_pac == ''
+                        probabilite_apres_pac = detail_prob_apres_pac.old_value
+                        entity.probabilite_apres_pac = probabilite_apres_pac
                       end
                     end
                     
-                  end
-                  issues_ids = entities.map(&:id)
-                  journals_ids = Journal.where(journalized_id: issues_ids, journalized_type: 'EasyRisk').map(&:id)
-                  journal_details = JournalDetail.where(journal_id: journals_ids, property: 'cf', prop_key: prop_keys)
-
-                  entities.each do |entity|
-                    prob_apres_pac = CustomValue.where(custom_field_id: Setting.plugin_cda_risk_management['probabilite_apres_pac_cf_id'].to_i, customized_id: entity.id).first.value
-                    impact_apres_pac = CustomValue.where(custom_field_id: Setting.plugin_cda_risk_management['criticite_apres_pac_cf_id'].to_i, customized_id: entity.id).first.value
-                    if !prob_apres_pac.nil? && !impact_apres_pac.nil?
-                      prob_apres_pac = prob_apres_pac.delete("^0-9-.")
-                      impact_apres_pac = impact_apres_pac.delete("^0-9-.")
-                    end
-                    # probability_id: 25, impact_id: 20, severity_id: 30
-                    entity.probability_id = 25
-                    entity.impact_id = 20
-                    entity.severity_id = 30
-                    entity.change_severity_pac
                   end
                 end 
               end

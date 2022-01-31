@@ -2,9 +2,43 @@ module CdaRiskManagement
   module Patches
     module EasyRiskPatch
       def self.prepended(base)
+        
         base.class_eval do
           before_validation :check_plan_action
           after_save :check_partage_client
+          attr_accessor :probabilite_apres_pac
+          attr_accessor :impact_apres_pac
+
+          def probability_value_given_date
+            EasyRiskEnumerationValue.find_by(enumeration_type: 'EasyRiskProbability', enumeration_id: self.probability_id )&.value || 0.0
+          end
+        
+          def impact_value_given_date
+            EasyRiskEnumerationValue.find_by(enumeration_type: 'EasyRiskImpact', enumeration_id: self.impact_id )&.value || 0.0
+          end
+        
+          def severity_value_given_date
+            probability_value_given_date * impact_value_given_date
+          end
+
+          def change_severity_given_date
+            range = EasyRiskEnumerationRange.all.detect{|r| r.range.cover?(severity_value_given_date) }
+            self.severity = range&.enumeration
+          end
+
+          def probability_value_pac_given_date
+            if !self.probabilite_apres_pac.nil?
+              prob_apres_pac = self.probabilite_apres_pac.delete("^0-9-.").to_i
+            end
+            BigDecimal(prob_apres_pac)
+          end
+        
+          def impact_value_pac_given_date
+            if !self.impact_apres_pac.nil?
+              impact_apres_pac = self.impact_apres_pac.delete("^0-9-.").to_i
+            end
+            BigDecimal(impact_apres_pac)
+          end
 
 
           def probability_value_pac
@@ -22,6 +56,8 @@ module CdaRiskManagement
             end
             BigDecimal(impact_apres_pac)
           end
+
+          
         
           def severity_value_pac
             probability_value_pac * impact_value_pac
@@ -31,6 +67,7 @@ module CdaRiskManagement
             range = EasyRiskEnumerationRange.all.detect{|r| r.range.cover?(severity_value_pac) }
             self.severity = range&.enumeration
           end
+
         
         end
       end

@@ -59,3 +59,5 @@ Added :
   - nothing working yet about showing matrix in old date
 Changed :
 Fixed :
+[1.0.0] - 31-01-2022
+  - Devs Done, all working
