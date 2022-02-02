@@ -19,7 +19,7 @@ module CdaRiskManagement
                 entities = get_entities(query, settings)
                 prop_keys = [Setting.plugin_cda_risk_management['criticite_apres_pac_cf_id'].to_i, Setting.plugin_cda_risk_management['probabilite_apres_pac_cf_id'].to_i]
                 if settings['given_date'] != '' && !settings['given_date'].nil?
-                  # entities = entities.reject{|e| e.created_at.strftime('%Y-%m-%d').to_date > settings['given_date'].to_date }
+                  entities = entities.reject{|e| e.created_at.strftime('%Y-%m-%d').to_date > settings['given_date'].to_date }
                   entities.each do |entity|
                     journals = Journal.where(journalized_id: entity.id, journalized_type: 'EasyRisk')
                     journals = journals.reject{|j| j.created_on.strftime('%Y-%m-%d').to_date > settings['given_date'].to_date }
