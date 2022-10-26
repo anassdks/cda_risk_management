@@ -19,6 +19,15 @@
               rows.left l(:field_easy_risk_impact), "#{@easy_risk.impact}(#{@easy_risk.impact_value})"
               rows.left l(:field_easy_risk_severity), "#{@easy_risk.severity}(#{@easy_risk.severity_value})"
 
+              if @easy_risk.issues.any?
+                risk_progress = @easy_risk.issues.map(&:done_ratio).sum / @easy_risk.issues.size
+              else
+                risk_progress = 0
+              end
+
+              rows.left l(:field_easy_risk_progress), "#{risk_progress}%"
+
+
               rows.right l(:field_project), link_to_project(@easy_risk.project)
               rows.right l(:field_author), link_to_user(@easy_risk.author)
               rows.right l(:field_assigned_to), link_to_user(@easy_risk.assigned_to)
@@ -47,7 +56,7 @@
       <% end %>
       <% if @easy_risk.solution.present? %>
 
-        
+
 
         <fieldset class="wiki easy-entity-details-description kicker" id="show_risk_cause">
           <% cause = @easy_risk.visible_custom_field_values.select{|i| i.custom_field.id == Setting.plugin_cda_risk_management['cause_cf_id'].to_i} %>
