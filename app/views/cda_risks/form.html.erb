@@ -174,7 +174,7 @@
         <% cfs << Setting.plugin_cda_risk_management['id_client_cf_id'].to_i%>
         <% cfs << Setting.plugin_cda_risk_management['discipline_cf_id'].to_i%>
         <% cfs << Setting.plugin_cda_risk_management['phase_cf_id'].to_i%>
-        
+
           <%if !value.custom_field.id.in? cfs %>
             <p>
               <%= custom_field_tag_with_label :easy_risk, value %>

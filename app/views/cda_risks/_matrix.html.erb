@@ -14,7 +14,7 @@
   given_date = local_assigns.fetch(:given_date, nil)
   groups_count = []
 
-  
+
 
   if !flip_axes
     yaxis = impact
@@ -36,7 +36,7 @@
         groups_count << grp.last.count
         groups_count
       end
-    else 
+    else
       groups = entities.group_by{|e| [e.impact_value,e.probability_value]}
     end
   else
@@ -58,7 +58,7 @@
         groups_count << grp.last.count
         groups_count
       end
-    else 
+    else
       groups = entities.group_by{|e| [e.probability_value,e.impact_value]}
     end
   end
@@ -118,7 +118,7 @@
           <% with_action += 1 if res == '1' %>
           <% without_action += 1 if res == '0' %>
           <% without_action += 1 if  res.nil? %>
-          
+
           <% end %>
             <span class="risk-matrix__cell-with-action <%= items.any? ? 'risk-matrix__cell-count--some':'' %>"><%= severity %></span> |
             <span class="risk-matrix__cell-with-action <%= items.any? ? 'risk-matrix__cell-count--some':'' %>"><%= with_action %></span> |
