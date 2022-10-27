@@ -7,6 +7,8 @@ fr:
   field_easy_risk_progress: Avancement global des tâches
   field_done_ratio: Avancement
   label_progress: Avancement
+  field_easy_risk_severity_value: Valeur de criticité
+  field_easy_risk_severity_value_patched: Valeur de gravité
 
   cda_risk_management:
     settings:
