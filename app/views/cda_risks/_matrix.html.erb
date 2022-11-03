@@ -14,8 +14,6 @@
   given_date = local_assigns.fetch(:given_date, nil)
   groups_count = []
 
-
-
   if !flip_axes
     yaxis = impact
     xaxis = probability
@@ -65,10 +63,6 @@
   xaxis.sort_by! { |xaxis| xaxis.value }
   yaxis.sort_by! { |yaxis| - yaxis.value }
 %>
-
-
-
-
 
 <table class="risk-matrix">
   <thead>
