@@ -1,13 +1,10 @@
-fr:
+en:
   field_easy_risk_category: Type de risque
   label_matrix_after_pac: Matrice après plan de réduction des risques
   label_plan_reduction_risque: PRR
   label_gravity_after_prr: après PRR
-  field_easy_risk_progress: Avancement global des tâches
+  field_easy_risk_progress: Global progress of tasks
   field_done_ratio: Avancement
-  label_progress: Avancement
-  field_easy_risk_severity_value: Valeur de criticité
-  field_easy_risk_severity_value_patched: Valeur de gravité
 
   cda_risk_management:
     settings:
@@ -27,3 +24,4 @@ fr:
       criticite_apres_pac: Criticité après PAC
       id_client: ID Client
       discipline: Discipline
+
