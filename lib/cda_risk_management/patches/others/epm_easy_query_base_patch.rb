@@ -1,11 +1,11 @@
-module CdaRiskManagement 
+module CdaRiskManagement
   module Patches
     module EpmEasyQueryBasePatch
       def self.prepended(base)
         base.class_eval do
           def get_show_data(settings, user, page_context = {})
             query = get_query(settings, user, page_context)
-        
+
             if page_zone_module && query&.valid?
               case output(settings)
               when 'chart', 'list', 'tiles'
@@ -53,21 +53,26 @@ module CdaRiskManagement
                         criticite_apres_pac = detail_crit_apres_pac.old_value
                         entity.impact_apres_pac = criticite_apres_pac
                       end
-                      
+
                       if !detail_prob_apres_pac.nil? && probabilite_apres_pac == ''
                         probabilite_apres_pac = detail_prob_apres_pac.old_value
                         entity.probabilite_apres_pac = probabilite_apres_pac
                       end
                     end
-                    
+
                   end
-                end 
+                end
               end
             end
-        
+
             { query: query, entities: entities, calendar: calendar }
           end
         end
+
+        def page_module_toggling_container_options_helper_method
+          'get_epm_easy_query_base_toggling_container_options_patched'
+        end
+
       end
     end
   end
