@@ -26,6 +26,12 @@
             %>
           </p>
 
+          <p>
+            <%= f.select :category_id, EasyRiskCategory.active.sorted.map { |p| [p.name, p.id] },
+                         label: l(:field_easy_risk_category),
+                         include_blank: true %>
+          </p>
+
         </div>
         <div class="splitcontentleft">
           <% if f.object.visible_custom_field_values.count > 0 %>
@@ -103,11 +109,6 @@
           </p>
         </div>
         <div class="splitcontentleft">
-          <p>
-            <%= f.select :category_id, EasyRiskCategory.active.sorted.map { |p| [p.name, p.id] },
-                         label: l(:field_easy_risk_category),
-                         include_blank: true %>
-          </p>
           <% if f.object.visible_custom_field_values.count > 0 %>
             <% cfs = []%>
             <% cfs << Setting.plugin_cda_risk_management['phase_cf_id'].to_i%>
